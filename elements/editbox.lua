@@ -1,16 +1,15 @@
 
-function dxCreateButton(x,y,width,height,text,baba,backcolor,backcolor2,textcolor,textcolor2,bordercolor,bordercolor2,textsize)
-local backcolor=backcolor  or tocolor(169,169,169,255)
-local textcolor=textcolor  or tocolor(255,255,255,255)
-local bordercolor=bordercolor  or tocolor(255,255,255,255)
-local bordercolor2=bordercolor2  or tocolor(40,115,178,255)
-local backcolor2=backcolor2 or tocolor(255,255,255,255)
-local textcolor2=textcolor2 or tocolor(0,0,0,255)
-local textsize=textsize or width/height
-local element=createElement('dxButton')
+function dxCreateEdit(x,y,width,height,text,baba,backcolor,textcolor,bordercolor,anothercolor)
+local backcolor=backcolor  or tocolor(255,255,255,255)
+local textcolor=textcolor  or tocolor(0,0,0,255)
+local bordercolor=bordercolor  or tocolor(40,115,178,255)
+local anothercolor=anothercolor or tocolor(0,0,0,255)
+local element=createElement('dxEdit')
 local baba=baba or false	
+local ismaxed=ismaxed or false	
+local othertext=text
 	if element then
-		if baba  then
+	if baba  then
 		setElementParent(element,baba)
 
 	if  Elements[baba].type~='Tab' then
@@ -50,37 +49,49 @@ local baba=baba or false
 	
 	end
 	end
+	
 	end
-	
-	
+		local edit=guiCreateEdit(x,y,width,height,text,false)
+			guiSetVisible(edit,false)
+			guiSetAlpha(edit,0)
+	local mywidth = dxGetTextWidth( text,1.15,"default-bold")
+		if x+3+mywidth> x+width then
+			ismaxed=true
+		end
+			
+			
 		Elements[element]={
-		type='Button',
+		type='Edit',
 		x=x,
 		y=y,
 		width=width,
 		height=height,
 		text=text,
+		anothercolor=anothercolor,
+		othertext=othertext,
 		baba=baba,
-		buttoneffectx=0,
-		buttoneffecty=0,
-		isincreas=false,
-		backcolor2=backcolor2,
-		textcolor2=textcolor2,
+		ismaxed=ismaxed,
+		orignalcolor=textcolor,
 		backcolor=backcolor,
 		textcolor=textcolor,
-		bordercolor2=bordercolor2,
+		edit=edit,
+		distanc1=0,
+		distanc2=0,
+		positiontext='left',
 		bordercolor=bordercolor,
 		visible=false,
+		isenabled=false,
+		backposition=0,
 		disabled=false,
 		lastclick=0,
 		}
+		
 		table.insert(createdElements,element)
-
-		if sourceResource then
-			if not resElements[getResourceName(sourceResource)] then resElements[getResourceName(sourceResource)]={} end
+					if sourceResource then
+				if not resElements[getResourceName(sourceResource)] then resElements[getResourceName(sourceResource)]={} end
 
 			table.insert(resElements[getResourceName(sourceResource)],element)
-			end
+			end					
 		return element
 	end
 	return false

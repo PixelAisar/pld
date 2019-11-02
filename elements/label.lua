@@ -1,16 +1,10 @@
 
-function dxCreateButton(x,y,width,height,text,baba,backcolor,backcolor2,textcolor,textcolor2,bordercolor,bordercolor2,textsize)
-local backcolor=backcolor  or tocolor(169,169,169,255)
+function dxCreateLabel(x,y,width,height,text,baba,textcolor)
 local textcolor=textcolor  or tocolor(255,255,255,255)
-local bordercolor=bordercolor  or tocolor(255,255,255,255)
-local bordercolor2=bordercolor2  or tocolor(40,115,178,255)
-local backcolor2=backcolor2 or tocolor(255,255,255,255)
-local textcolor2=textcolor2 or tocolor(0,0,0,255)
-local textsize=textsize or width/height
-local element=createElement('dxButton')
+local element=createElement('dxLabel')
 local baba=baba or false	
 	if element then
-		if baba  then
+	if baba  then
 		setElementParent(element,baba)
 
 	if  Elements[baba].type~='Tab' then
@@ -51,32 +45,23 @@ local baba=baba or false
 	end
 	end
 	end
-	
-	
 		Elements[element]={
-		type='Button',
+		type='Label',
 		x=x,
 		y=y,
 		width=width,
 		height=height,
 		text=text,
 		baba=baba,
-		buttoneffectx=0,
-		buttoneffecty=0,
-		isincreas=false,
-		backcolor2=backcolor2,
-		textcolor2=textcolor2,
-		backcolor=backcolor,
 		textcolor=textcolor,
-		bordercolor2=bordercolor2,
-		bordercolor=bordercolor,
+		positionh='center',
+		positiony='center',
 		visible=false,
 		disabled=false,
 		lastclick=0,
 		}
 		table.insert(createdElements,element)
-
-		if sourceResource then
+			if sourceResource then
 			if not resElements[getResourceName(sourceResource)] then resElements[getResourceName(sourceResource)]={} end
 
 			table.insert(resElements[getResourceName(sourceResource)],element)
@@ -85,3 +70,64 @@ local baba=baba or false
 	end
 	return false
 end
+
+function dxLabelGetColor(label)
+
+	if Elements[label] and Elements[label].type=='Label' then
+	
+		return Elements[label].textcolor
+
+	end
+	
+	return false
+end
+
+
+
+function  dxLabelSetHorizontalAlign (label,pos)
+
+	if Elements[label] and Elements[label].type=='Label' then
+	
+		Elements[label].positionh=pos
+	
+		return true
+
+	end
+	
+	return false
+end
+
+
+
+
+function  dxLabelSetVerticalAlign(label,pos)
+
+	if Elements[label] and Elements[label].type=='Label' then
+	
+		Elements[label].positiony=pos
+	
+		return true
+
+	end
+	
+	return false
+end
+
+
+
+
+
+function  dxLabelSetColor(label,color)
+
+	if Elements[label] and Elements[label].type=='Label' then
+	
+		Elements[label].textcolor=color
+	
+		return true
+
+	end
+	
+	return false
+end
+
+

@@ -1,16 +1,14 @@
 
-function dxCreateButton(x,y,width,height,text,baba,backcolor,backcolor2,textcolor,textcolor2,bordercolor,bordercolor2,textsize)
-local backcolor=backcolor  or tocolor(169,169,169,255)
-local textcolor=textcolor  or tocolor(255,255,255,255)
-local bordercolor=bordercolor  or tocolor(255,255,255,255)
-local bordercolor2=bordercolor2  or tocolor(40,115,178,255)
-local backcolor2=backcolor2 or tocolor(255,255,255,255)
-local textcolor2=textcolor2 or tocolor(0,0,0,255)
-local textsize=textsize or width/height
-local element=createElement('dxButton')
+function dxCreateProgressBar(x,y,width,height,baba,text,backcolor,textcolor,progresscolor)
+local backcolor=backcolor  or tocolor(255,255,255,255)
+local textcolor=textcolor  or tocolor(40,115,178,255)
+local progresscolor=progresscolor  or tocolor(40,115,178,70)
+local text=text or false
+local element=createElement('dxProgressBar')
 local baba=baba or false	
+local othertext=text
 	if element then
-		if baba  then
+if baba  then
 		setElementParent(element,baba)
 
 	if  Elements[baba].type~='Tab' then
@@ -51,37 +49,57 @@ local baba=baba or false
 	end
 	end
 	end
-	
-	
+ 			
 		Elements[element]={
-		type='Button',
+		type='progressBar',
 		x=x,
 		y=y,
 		width=width,
 		height=height,
 		text=text,
+		othertext=othertext,
 		baba=baba,
-		buttoneffectx=0,
-		buttoneffecty=0,
-		isincreas=false,
-		backcolor2=backcolor2,
-		textcolor2=textcolor2,
 		backcolor=backcolor,
 		textcolor=textcolor,
-		bordercolor2=bordercolor2,
-		bordercolor=bordercolor,
+		positiontext='center',
+		progresscolor=progresscolor,
 		visible=false,
+		distanc=0,
 		disabled=false,
 		lastclick=0,
 		}
 		table.insert(createdElements,element)
-
-		if sourceResource then
-			if not resElements[getResourceName(sourceResource)] then resElements[getResourceName(sourceResource)]={} end
-
-			table.insert(resElements[getResourceName(sourceResource)],element)
-			end
 		return element
 	end
 	return false
+end
+ function dxProgressBarSetProgress(element,pr)
+ if pr<0 or pr > 100 then return false end
+ 	if Elements[element] and Elements[element].type=='progressBar' then
+	
+		Elements[element].distanc=Elements[element].width*pr/100
+		
+		return true
+	
+	end
+ return false
+end
+ function dxProgressBarSetText(element,text)
+ if type(text)~='string' then return false end
+ 	if Elements[element] and Elements[element].type=='progressBar' then
+	
+		Elements[element].text=text
+		
+		return true
+	
+	end
+ return false
+end
+ function dxProgressBarGetProgress(element)
+ 	if Elements[element] and Elements[element].type=='progressBar' then
+	
+			return (Elements[element].distanc/Elements[element].width)*100
+			
+	end
+ return false
 end
